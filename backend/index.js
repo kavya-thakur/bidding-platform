@@ -115,7 +115,7 @@ app.post("/reset", (req, res) => {
     ...item,
     currentBid: item.startingPrice,
     lastBidder: null,
-    endTime: Date.now() + item.duration,
+    endTime: Date.now() + 10 * 60 * 1000, // reset to 10 minutes
   }));
 
   io.emit("RESET_ITEMS", items);
