@@ -9,7 +9,12 @@ const io = new Server(server, {
   cors: { origin: "*" },
 });
 
-app.use(cors());
+app.use(
+  cors({
+    origin: "*",
+  }),
+);
+
 app.use(express.json());
 
 // In-memory auction items
@@ -127,8 +132,8 @@ io.on("connection", (socket) => {
   });
 });
 
-const PORT = 5001;
+const PORT = process.env.PORT || 5001;
 
 server.listen(PORT, () => {
-  console.log(`Backend running on http://localhost:${PORT}`);
+  console.log(`Backend running on port ${PORT}`);
 });
