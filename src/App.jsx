@@ -1,5 +1,3 @@
-
-
 import { useEffect, useState } from "react";
 import { socket } from "./services/socket";
 import AuctionGrid from "./component/AuctionGrid";
@@ -116,6 +114,16 @@ function App() {
           Compete with other users in the final seconds of live auctions.
           Updates are synchronized instantly across all clients.
         </p>
+        <button
+          onClick={async () => {
+            await fetch(`https://bidding-platform-one.vercel.app/reset`, {
+              method: "POST",
+            });
+          }}
+          className="text-sm mt-3 px-4 py-2 rounded-lg bg-slate-200 hover:bg-slate-300"
+        >
+          Reset Auctions (Demo)
+        </button>
       </motion.section>
 
       {/* Main Content */}

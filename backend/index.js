@@ -31,66 +31,82 @@ app.use(express.json());
 let items = [
   {
     id: 1,
-    title: "Apple iPhone 15 Pro",
-    startingPrice: 80000,
-    currentBid: 80000,
-    endTime: Date.now() + 10 * 60 * 1000,
-    lastBidder: null,
-  },
-  {
-    id: 2,
-    title: "MacBook Air M2",
-    startingPrice: 95000,
-    currentBid: 95000,
+    title: "Apple iPhone 15 Pro (256GB)",
+    startingPrice: 999,
+    currentBid: 999,
     endTime: Date.now() + 12 * 60 * 1000,
     lastBidder: null,
   },
   {
-    id: 3,
-    title: "Sony WH-1000XM5 Headphones",
-    startingPrice: 25000,
-    currentBid: 25000,
-    endTime: Date.now() + 8 * 60 * 1000,
-    lastBidder: null,
-  },
-  {
-    id: 4,
-    title: "Samsung 55-inch 4K Smart TV",
-    startingPrice: 60000,
-    currentBid: 60000,
+    id: 2,
+    title: "MacBook Air M2 (16GB RAM)",
+    startingPrice: 1399,
+    currentBid: 1399,
     endTime: Date.now() + 15 * 60 * 1000,
     lastBidder: null,
   },
   {
-    id: 5,
-    title: "Apple Watch Series 9",
-    startingPrice: 35000,
-    currentBid: 35000,
+    id: 3,
+    title: "Sony WH-1000XM5 Noise Cancelling Headphones",
+    startingPrice: 299,
+    currentBid: 299,
     endTime: Date.now() + 9 * 60 * 1000,
     lastBidder: null,
   },
   {
-    id: 6,
-    title: "PlayStation 5 Console",
-    startingPrice: 50000,
-    currentBid: 50000,
-    endTime: Date.now() + 11 * 60 * 1000,
+    id: 4,
+    title: 'Samsung 55" QLED 4K Smart TV',
+    startingPrice: 799,
+    currentBid: 799,
+    endTime: Date.now() + 18 * 60 * 1000,
     lastBidder: null,
   },
   {
-    id: 7,
-    title: "Canon EOS R10 Mirrorless Camera",
-    startingPrice: 70000,
-    currentBid: 70000,
+    id: 5,
+    title: "Apple Watch Ultra 2",
+    startingPrice: 799,
+    currentBid: 799,
+    endTime: Date.now() + 10 * 60 * 1000,
+    lastBidder: null,
+  },
+  {
+    id: 6,
+    title: "PlayStation 5 + DualSense Controller",
+    startingPrice: 549,
+    currentBid: 549,
     endTime: Date.now() + 14 * 60 * 1000,
     lastBidder: null,
   },
   {
+    id: 7,
+    title: "Canon EOS R10 Mirrorless Camera Kit",
+    startingPrice: 999,
+    currentBid: 999,
+    endTime: Date.now() + 16 * 60 * 1000,
+    lastBidder: null,
+  },
+  {
     id: 8,
-    title: "Dyson Airwrap Styler",
-    startingPrice: 42000,
-    currentBid: 42000,
-    endTime: Date.now() + 7 * 60 * 1000,
+    title: "Dyson Airwrap Complete Long",
+    startingPrice: 599,
+    currentBid: 599,
+    endTime: Date.now() + 8 * 60 * 1000,
+    lastBidder: null,
+  },
+  {
+    id: 9,
+    title: "Nike Air Jordan 1 Retro (Limited Edition)",
+    startingPrice: 350,
+    currentBid: 350,
+    endTime: Date.now() + 11 * 60 * 1000,
+    lastBidder: null,
+  },
+  {
+    id: 10,
+    title: "Rolex Oyster Perpetual (Pre-owned)",
+    startingPrice: 8500,
+    currentBid: 8500,
+    endTime: Date.now() + 20 * 60 * 1000,
     lastBidder: null,
   },
 ];
@@ -136,10 +152,24 @@ io.on("connection", (socket) => {
       userId,
     });
   });
+  app.post("/reset", (req, res) => {
+    items = items.map((item) => ({
+      ...item,
+      currentBid: item.startingPrice,
+      lastBidder: null,
+      endTime: Date.now() + 10 * 60 * 1000, // reset timer
+    }));
+
+    io.emit("RESET_ITEMS", items);
+    res.json({ message: "Auctions reset" });
+  });
 
   socket.on("disconnect", () => {
     console.log("User disconnected:", socket.id);
   });
+});
+socket.on("RESET_ITEMS", (data) => {
+  setItems(data);
 });
 
 const PORT = process.env.PORT || 5001;

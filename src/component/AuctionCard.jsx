@@ -58,29 +58,50 @@ export default function AuctionCard({ item, onBid, userId }) {
 
         {/* Status */}
         <div className="mt-4 h-8">
-          <AnimatePresence>
-            {status === "winning" && !isEnded && (
-              <motion.div
-                initial={{ opacity: 0, scale: 0.8, y: 6 }}
-                animate={{ opacity: 1, scale: 1, y: 0 }}
-                exit={{ opacity: 0 }}
-                className="inline-flex items-center gap-1 px-3 py-1 rounded-full bg-emerald-100 text-emerald-700 text-sm"
-              >
-                <Trophy size={16} /> You’re winning
-              </motion.div>
-            )}
+          <div className="mt-4 min-h-[2rem]">
+            <AnimatePresence>
+              {/* While running */}
+              {status === "winning" && !isEnded && (
+                <motion.div
+                  initial={{ opacity: 0, scale: 0.8, y: 6 }}
+                  animate={{ opacity: 1, scale: 1, y: 0 }}
+                  exit={{ opacity: 0 }}
+                  className="inline-flex items-center gap-1 px-3 py-1 rounded-full bg-emerald-100 text-emerald-700 text-sm"
+                >
+                  <Trophy size={16} /> You’re winning
+                </motion.div>
+              )}
 
-            {status === "outbid" && !isEnded && (
-              <motion.div
-                initial={{ opacity: 0, scale: 0.8, y: 6 }}
-                animate={{ opacity: 1, scale: 1, y: 0 }}
-                exit={{ opacity: 0 }}
-                className="inline-flex items-center gap-1 px-3 py-1 rounded-full bg-rose-100 text-rose-600 text-sm"
-              >
-                <XCircle size={16} /> Outbid
-              </motion.div>
-            )}
-          </AnimatePresence>
+              {status === "outbid" && !isEnded && (
+                <motion.div
+                  initial={{ opacity: 0, scale: 0.8, y: 6 }}
+                  animate={{ opacity: 1, scale: 1, y: 0 }}
+                  exit={{ opacity: 0 }}
+                  className="inline-flex items-center gap-1 px-3 py-1 rounded-full bg-rose-100 text-rose-600 text-sm"
+                >
+                  <XCircle size={16} /> Outbid
+                </motion.div>
+              )}
+
+              {/* When ended */}
+              {isEnded && (
+                <motion.div
+                  initial={{ opacity: 0, y: 6 }}
+                  animate={{ opacity: 1, y: 0 }}
+                  className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-slate-100 text-slate-600 text-sm"
+                >
+                  🏁 Auction Ended
+                  {item.lastBidder === userId ? (
+                    <span className="text-emerald-600 font-medium">
+                      You won
+                    </span>
+                  ) : (
+                    <span className="text-rose-600 font-medium">You lost</span>
+                  )}
+                </motion.div>
+              )}
+            </AnimatePresence>
+          </div>
         </div>
 
         {/* Button */}
@@ -95,7 +116,7 @@ export default function AuctionCard({ item, onBid, userId }) {
                 : "bg-indigo-500 text-white hover:shadow-lg hover:bg-indigo-600"
             }`}
         >
-          Place Bid + $10
+          {isEnded ? "Auction Ended" : "Place Bid + $10"}
         </motion.button>
       </motion.div>
     </motion.div>
