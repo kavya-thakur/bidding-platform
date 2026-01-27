@@ -3,6 +3,11 @@ import { useEffect, useState } from "react";
 function Timer({ endTime, onEnd }) {
   const [timeLeft, setTimeLeft] = useState(endTime - Date.now());
 
+  // Reset timeLeft when endTime changes
+  useEffect(() => {
+    setTimeLeft(endTime - Date.now());
+  }, [endTime]);
+
   useEffect(() => {
     const interval = setInterval(() => {
       const remaining = endTime - Date.now();
@@ -15,7 +20,7 @@ function Timer({ endTime, onEnd }) {
     }, 1000);
 
     return () => clearInterval(interval);
-  }, [endTime]); // ✅ only depend on endTime
+  }, [endTime, onEnd]);
 
   if (timeLeft <= 0) {
     return <span className="text-rose-500 text-sm">Auction ended</span>;
