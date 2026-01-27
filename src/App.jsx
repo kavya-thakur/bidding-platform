@@ -135,7 +135,7 @@ function App() {
       </motion.section>
 
       {/* Main Content */}
-      <main className="max-w-6xl mx-auto px-6 pb-16">
+      <main className="max-w-6xl mx-auto px-6 pb-16"> 
         {loading ? (
           <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
             <SkeletonCard />
