@@ -1,5 +1,5 @@
 import AuctionCard from "./AuctionCard";
-function AuctionGrid({ items, onBid, userId }) {
+function AuctionGrid({ items, onBid, userId, now }) {
   return (
     <div
       style={{
@@ -9,7 +9,13 @@ function AuctionGrid({ items, onBid, userId }) {
       }}
     >
       {items.map((item) => (
-        <AuctionCard key={item.id} item={item} onBid={onBid} userId={userId} />
+        <AuctionCard
+          key={item.id}
+          item={item}
+          onBid={onBid}
+          userId={userId}
+          now={now}
+        />
       ))}
     </div>
   );

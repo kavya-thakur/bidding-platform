@@ -1,32 +1,17 @@
-import { useEffect, useState } from "react";
+import { useEffect } from "react";
 
-function Timer({ endTime, onEnd }) {
-  const [timeLeft, setTimeLeft] = useState(endTime - Date.now());
-
-  // Reset timeLeft when endTime changes
-  useEffect(() => {
-    setTimeLeft(endTime - Date.now());
-  }, [endTime]);
+function Timer({ endTime, now, onEnd }) {
+  const timeLeft = endTime - now;
 
   useEffect(() => {
-    const interval = setInterval(() => {
-      const remaining = endTime - Date.now();
-      setTimeLeft(remaining);
-
-      if (remaining <= 0) {
-        clearInterval(interval);
-        onEnd();
-      }
-    }, 1000);
-
-    return () => clearInterval(interval);
-  }, [endTime, onEnd]);
+    if (timeLeft <= 0) onEnd();
+  }, [timeLeft, onEnd]);
 
   if (timeLeft <= 0) {
     return <span className="text-rose-500 text-sm">Auction ended</span>;
   }
 
-  const minutes = Math.floor(timeLeft / 1000 / 60);
+  const minutes = Math.floor(timeLeft / 60000);
   const seconds = Math.floor((timeLeft / 1000) % 60);
 
   return (

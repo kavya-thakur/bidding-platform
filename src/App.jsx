@@ -10,7 +10,7 @@ function App() {
   const [items, setItems] = useState([]);
   const [toasts, setToasts] = useState([]);
   const [loading, setLoading] = useState(true);
-
+  const [now, setNow] = useState(Date.now());
   const [userId] = useState(() => {
     const saved = localStorage.getItem("userId");
     if (saved) return saved;
@@ -57,6 +57,13 @@ function App() {
     return () => socket.off("RESET_ITEMS");
   }, []);
 
+  useEffect(() => {
+    const interval = setInterval(() => {
+      setNow(Date.now());
+    }, 1000);
+
+    return () => clearInterval(interval);
+  }, []);
   const showToast = (message, type) => {
     const id = Date.now();
     setToasts((prev) => [...prev, { id, message, type }]);
@@ -170,7 +177,12 @@ function App() {
               },
             }}
           >
-            <AuctionGrid items={items} onBid={placeBid} userId={userId} />
+            <AuctionGrid
+              items={items}
+              onBid={placeBid}
+              userId={userId}
+              now={now}
+            />
           </motion.div>
         )}
       </main>
