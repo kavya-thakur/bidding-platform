@@ -5,12 +5,14 @@ const cors = require("cors");
 
 const app = express();
 const server = http.createServer(app);
+
 const allowedOrigins = [
   "https://bidding-platform-one.vercel.app",
   "http://localhost:5173",
 ];
 
 app.use(cors({ origin: allowedOrigins }));
+app.use(express.json());
 
 const io = new Server(server, {
   cors: {
@@ -18,14 +20,6 @@ const io = new Server(server, {
     methods: ["GET", "POST"],
   },
 });
-
-app.use(
-  cors({
-    origin: allowedOrigins,
-  }),
-);
-
-app.use(express.json());
 
 // In-memory auction items
 let items = [
@@ -110,10 +104,22 @@ let items = [
     lastBidder: null,
   },
 ];
-
 // REST API
 app.get("/items", (req, res) => {
   res.json(items);
+});
+
+// Reset endpoint (for demo)
+app.post("/reset", (req, res) => {
+  items = items.map((item) => ({
+    ...item,
+    currentBid: item.startingPrice,
+    lastBidder: null,
+    endTime: Date.now() + item.duration,
+  }));
+
+  io.emit("RESET_ITEMS", items);
+  res.json({ message: "Auctions reset" });
 });
 
 // Socket logic
@@ -121,8 +127,6 @@ io.on("connection", (socket) => {
   console.log("User connected:", socket.id);
 
   socket.on("BID_PLACED", ({ itemId, bidAmount, userId }) => {
-    console.log("Bid received:", itemId, bidAmount, userId);
-
     const item = items.find((i) => i.id === itemId);
 
     if (!item) {
@@ -130,9 +134,7 @@ io.on("connection", (socket) => {
       return;
     }
 
-    const now = Date.now();
-
-    if (now > item.endTime) {
+    if (Date.now() > item.endTime) {
       socket.emit("BID_ERROR", "Auction ended");
       return;
     }
@@ -142,7 +144,7 @@ io.on("connection", (socket) => {
       return;
     }
 
-    // Accept bid
+    // Accept bid (race condition handled by single-threaded Node)
     item.currentBid = bidAmount;
     item.lastBidder = userId;
 
@@ -152,28 +154,13 @@ io.on("connection", (socket) => {
       userId,
     });
   });
-  app.post("/reset", (req, res) => {
-    items = items.map((item) => ({
-      ...item,
-      currentBid: item.startingPrice,
-      lastBidder: null,
-      endTime: Date.now() + 10 * 60 * 1000, // reset timer
-    }));
-
-    io.emit("RESET_ITEMS", items);
-    res.json({ message: "Auctions reset" });
-  });
 
   socket.on("disconnect", () => {
     console.log("User disconnected:", socket.id);
   });
 });
-socket.on("RESET_ITEMS", (data) => {
-  setItems(data);
-});
 
 const PORT = process.env.PORT || 5001;
-
 server.listen(PORT, () => {
   console.log(`Backend running on port ${PORT}`);
 });

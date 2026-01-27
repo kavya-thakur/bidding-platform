@@ -20,7 +20,7 @@ function App() {
   });
 
   useEffect(() => {
-    fetch("https://bidding-platform-ns5n.onrender.com/items")
+    fetch(`${import.meta.env.VITE_API_URL}/items`)
       .then((res) => res.json())
       .then((data) => {
         setItems(data);
@@ -47,6 +47,14 @@ function App() {
 
     return () => socket.off("UPDATE_BID");
   }, [userId]);
+  useEffect(() => {
+    socket.on("RESET_ITEMS", (data) => {
+      setItems(data);
+      showToast("Auctions reset", "success");
+    });
+
+    return () => socket.off("RESET_ITEMS");
+  }, []);
 
   const showToast = (message, type) => {
     const id = Date.now();
@@ -116,7 +124,7 @@ function App() {
         </p>
         <button
           onClick={async () => {
-            await fetch(`https://bidding-platform-one.vercel.app/reset`, {
+            await fetch(`${import.meta.env.VITE_API_URL}/reset`, {
               method: "POST",
             });
           }}
