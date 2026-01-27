@@ -24,6 +24,10 @@ export default function AuctionCard({ item, onBid, userId }) {
     const t = setTimeout(() => setPulse(false), 250);
     return () => clearTimeout(t);
   }, [item.currentBid]);
+  useEffect(() => {
+    setIsEnded(false);
+    setStatus("idle");
+  }, [item.endTime]);
 
   return (
     <motion.div
@@ -53,7 +57,12 @@ export default function AuctionCard({ item, onBid, userId }) {
 
         {/* Timer */}
         <div className="mt-3">
-          <Timer endTime={item.endTime} onEnd={() => setIsEnded(true)} />
+          {/* <Timer endTime={item.endTime} onEnd={() => setIsEnded(true)} /> */}
+          <Timer
+            key={item.endTime}
+            endTime={item.endTime}
+            onEnd={() => setIsEnded(true)}
+          />
         </div>
 
         {/* Status */}
