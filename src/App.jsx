@@ -49,6 +49,7 @@ function App() {
   }, [userId]);
   useEffect(() => {
     socket.on("RESET_ITEMS", (data) => {
+      console.log("RESET_ITEMS received", data);
       setItems(data);
       showToast("Auctions reset", "success");
     });
@@ -122,7 +123,7 @@ function App() {
           Compete with other users in the final seconds of live auctions.
           Updates are synchronized instantly across all clients.
         </p>
-        <button
+        {/* <button
           onClick={async () => {
             await fetch(`${import.meta.env.VITE_API_URL}/reset`, {
               method: "POST",
@@ -131,11 +132,24 @@ function App() {
           className="text-sm mt-3 px-4 py-2 rounded-lg bg-slate-200 hover:bg-slate-300"
         >
           Reset Auctions (Demo)
+        </button> */}
+        <button
+          onClick={async () => {
+            await fetch(`${import.meta.env.VITE_API_URL}/reset`, {
+              method: "POST",
+            });
+
+            const res = await fetch(`${import.meta.env.VITE_API_URL}/items`);
+            const data = await res.json();
+            setItems(data);
+          }}
+        >
+          Reset Auctions (Demo)
         </button>
       </motion.section>
 
       {/* Main Content */}
-      <main className="max-w-6xl mx-auto px-6 pb-16"> 
+      <main className="max-w-6xl mx-auto px-6 pb-16">
         {loading ? (
           <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
             <SkeletonCard />
