@@ -5,13 +5,23 @@ const cors = require("cors");
 
 const app = express();
 const server = http.createServer(app);
+const allowedOrigins = [
+  "https://bidding-platform-one.vercel.app",
+  "http://localhost:5173",
+];
+
+app.use(cors({ origin: allowedOrigins }));
+
 const io = new Server(server, {
-  cors: { origin: "*" },
+  cors: {
+    origin: allowedOrigins,
+    methods: ["GET", "POST"],
+  },
 });
 
 app.use(
   cors({
-    origin: "*",
+    origin: allowedOrigins,
   }),
 );
 

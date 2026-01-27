@@ -1,102 +1,4 @@
-// import { useEffect, useState } from "react";
-// import { socket } from "./services/socket";
-// import AuctionGrid from "./component/AuctionGrid";
-// import ToastContainer from "./component/ToastContainer";
-// import SkeletonCard from "./component/loaders/SkeletonCard";
-// import { motion } from "framer-motion";
 
-// function App() {
-//   const [items, setItems] = useState([]);
-//   const [toasts, setToasts] = useState([]);
-//   const [userId] = useState(() => {
-//     const saved = localStorage.getItem("userId");
-//     if (saved) return saved;
-
-//     const newId = Math.random().toString(36).substring(2, 7);
-//     localStorage.setItem("userId", newId);
-//     return newId;
-//   });
-
-//   const [loading, setLoading] = useState(true);
-
-//   useEffect(() => {
-//     fetch("http://localhost:5001/items")
-//       .then((res) => res.json())
-//       .then((data) => {
-//         setItems(data);
-//         setLoading(false);
-//       });
-//   }, []);
-
-//   useEffect(() => {
-//     socket.on("UPDATE_BID", (data) => {
-//       setItems((prev) =>
-//         prev.map((item) =>
-//           item.id === data.itemId
-//             ? { ...item, currentBid: data.currentBid, lastBidder: data.userId }
-//             : item,
-//         ),
-//       );
-
-//       if (data.userId === userId) {
-//         showToast("Bid placed successfully", "success");
-//       } else {
-//         showToast("You were outbid", "error");
-//       }
-//     });
-
-//     return () => socket.off("UPDATE_BID");
-//   }, []);
-
-//   const showToast = (message, type) => {
-//     const id = Date.now();
-//     setToasts((prev) => [...prev, { id, message, type }]);
-
-//     setTimeout(() => {
-//       setToasts((prev) => prev.filter((t) => t.id !== id));
-//     }, 2500);
-//   };
-
-//   const placeBid = (itemId, currentBid) => {
-//     socket.emit("BID_PLACED", {
-//       itemId,
-//       bidAmount: currentBid + 10,
-//       userId,
-//     });
-//   };
-
-//   return (
-//     <div className="min-h-screen bg-stone-100">
-//       {/* Header */}
-//       <motion.header
-//         initial={{ opacity: 0, y: -10 }}
-//         animate={{ opacity: 1, y: 0 }}
-//         className="sticky top-0  backdrop-blur  p-4 z-40"
-//       >
-//         <h1 className="text-3xl font-semibold text-neutral-800 text-center">
-//           Live Auction Platform
-//         </h1>
-//       </motion.header>
-
-//       {/* Main */}
-//       <main className="max-w-5xl mx-auto p-8">
-//         {loading ? (
-//           <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
-//             <SkeletonCard />
-//             <SkeletonCard />
-//           </div>
-//         ) : (
-//           <AuctionGrid items={items} onBid={placeBid} userId={userId} />
-//         )}
-//       </main>
-
-//       {/* Toasts */}
-//       <ToastContainer toasts={toasts} />
-//     </div>
-//   );
-// }
-
-// export default App;
 
 import { useEffect, useState } from "react";
 import { socket } from "./services/socket";
@@ -120,7 +22,7 @@ function App() {
   });
 
   useEffect(() => {
-    fetch("http://localhost:5001/items")
+    fetch("https://bidding-platform-ns5n.onrender.com/items")
       .then((res) => res.json())
       .then((data) => {
         setItems(data);
