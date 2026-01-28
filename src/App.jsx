@@ -19,12 +19,26 @@ function App() {
   });
 
   useEffect(() => {
-    fetch(`${import.meta.env.VITE_API_URL}/items`)
-      .then((res) => res.json())
-      .then((data) => {
+    const fetchItems = async () => {
+      try {
+        setLoading(true);
+
+        const response = await fetch(`${import.meta.env.VITE_API_URL}/items`);
+
+        if (!response.ok) {
+          throw new Error("Failed to fetch items");
+        }
+
+        const data = await response.json();
         setItems(data);
+      } catch (error) {
+        console.error("Error fetching items:", error);
+      } finally {
         setLoading(false);
-      });
+      }
+    };
+
+    fetchItems();
   }, []);
 
   useEffect(() => {
