@@ -103,7 +103,7 @@ const AuctionCard = memo(function AuctionCard({ item, onBid, userId, now }) {
             onBid(item.id, item.currentBid);
             setTimeout(() => setIsBidding(false), 300);
           }}
-          className={`mt-5 w-full py-3 rounded-xl  font-medium transition-all
+          className={`mt-5 w-full py-3 rounded-xl cursor-pointer font-medium transition-all
             ${
               isEnded
                 ? "bg-slate-200 text-slate-400 cursor-not-allowed"

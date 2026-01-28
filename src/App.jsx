@@ -69,7 +69,7 @@ function App() {
     setToasts((prev) => [...prev, { id, message, type }]);
     setTimeout(() => {
       setToasts((prev) => prev.filter((t) => t.id !== id));
-    }, 2400);
+    }, 500);
   };
 
   const placeBid = (itemId, currentBid) => {
@@ -131,6 +131,7 @@ function App() {
           Updates are synchronized instantly across all clients.
         </p>
         <button
+          className="mt-3 cursor-pointer bg-neutral-200 px-4 py-2 rounded-xl"
           onClick={async () => {
             await fetch(`${import.meta.env.VITE_API_URL}/reset`, {
               method: "POST",
