@@ -3,7 +3,8 @@ import { motion, AnimatePresence } from "framer-motion";
 import { Trophy, XCircle, Gavel } from "lucide-react";
 import Timer from "./Timer";
 
-const AuctionCard = memo(function AuctionCard({ item, onBid, userId, now }) {
+const AuctionCard = memo(function AuctionCard({ item, onBid, userId }) {
+  console.log("renderes card");
   const [isEnded, setIsEnded] = useState(false);
   const [isBidding, setIsBidding] = useState(false);
 
@@ -48,7 +49,6 @@ const AuctionCard = memo(function AuctionCard({ item, onBid, userId, now }) {
           <Timer
             key={item.endTime}
             endTime={item.endTime}
-            now={now}
             onEnd={() => setIsEnded(true)}
           />
         </div>

@@ -1,4 +1,4 @@
-import { useEffect, useState } from "react";
+import { useEffect, useState, useCallback } from "react";
 import { socket } from "./services/socket";
 import AuctionGrid from "./component/AuctionGrid";
 import ToastContainer from "./component/ToastContainer";
@@ -10,7 +10,6 @@ function App() {
   const [items, setItems] = useState([]);
   const [toasts, setToasts] = useState([]);
   const [loading, setLoading] = useState(true);
-  const [now, setNow] = useState(Date.now());
   const [userId] = useState(() => {
     const saved = localStorage.getItem("userId");
     if (saved) return saved;
@@ -57,13 +56,6 @@ function App() {
     return () => socket.off("RESET_ITEMS");
   }, []);
 
-  useEffect(() => {
-    const interval = setInterval(() => {
-      setNow(Date.now());
-    }, 1000);
-
-    return () => clearInterval(interval);
-  }, []);
   const showToast = (message, type) => {
     const id = Date.now();
     setToasts((prev) => [...prev, { id, message, type }]);
@@ -72,13 +64,23 @@ function App() {
     }, 500);
   };
 
-  const placeBid = (itemId, currentBid) => {
-    socket.emit("BID_PLACED", {
-      itemId,
-      bidAmount: currentBid + 10,
-      userId,
-    });
-  };
+  // const placeBid = (itemId, currentBid) => {
+  //   socket.emit("BID_PLACED", {
+  //     itemId,
+  //     bidAmount: currentBid + 10,
+  //     userId,
+  //   });
+  // };
+  const placeBid = useCallback(
+    (itemId, currentBid) => {
+      socket.emit("BID_PLACED", {
+        itemId,
+        bidAmount: currentBid + 10,
+        userId,
+      });
+    },
+    [userId],
+  );
 
   return (
     <div className="relative min-h-screen overflow-hidden bg-[#fafafa] text-slate-800 px-3">
@@ -168,12 +170,7 @@ function App() {
               },
             }}
           >
-            <AuctionGrid
-              items={items}
-              onBid={placeBid}
-              userId={userId}
-              now={now}
-            />
+            <AuctionGrid items={items} onBid={placeBid} userId={userId} />
           </motion.div>
         )}
       </main>

@@ -1,10 +1,14 @@
 import { useEffect } from "react";
+import { useNow } from "../hooks/useNow";
 
-function Timer({ endTime, now, onEnd }) {
+function Timer({ endTime, onEnd }) {
+  const now = useNow(); // only Timer listens to clock
   const timeLeft = endTime - now;
 
   useEffect(() => {
-    if (timeLeft <= 0) onEnd();
+    if (timeLeft <= 0) {
+      onEnd();
+    }
   }, [timeLeft, onEnd]);
 
   if (timeLeft <= 0) {
