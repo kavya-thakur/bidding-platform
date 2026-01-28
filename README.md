@@ -36,7 +36,7 @@ A real-time auction platform built with React, Node.js, and Socket.io where mult
 1. Clone the repository
 
 ```bash
-git clone <your-repo-link>
+git clone https://github.com/kavya-thakur/bidding-platform.git
 ```
 
 2. Start backend
@@ -50,7 +50,6 @@ node index.js
 3. Start frontend
 
 ```bash
-cd frontend
 npm install
 npm run dev
 ```
@@ -69,6 +68,6 @@ npm run dev
 
 ## Live Demo
 
-Frontend: https://your-vercel-link.vercel.app
+Frontend: https://bidding-platform-one.vercel.app/
 
-Backend: https://your-render-link.onrender.com
+Backend: https://bidding-platform-ns5n.onrender.com
