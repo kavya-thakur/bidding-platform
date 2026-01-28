@@ -1,13 +1,7 @@
 import AuctionCard from "./AuctionCard";
 function AuctionGrid({ items, onBid, userId, now }) {
   return (
-    <div
-      style={{
-        display: "grid",
-        gridTemplateColumns: "repeat(2, 1fr)",
-        gap: "20px",
-      }}
-    >
+    <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
       {items.map((item) => (
         <AuctionCard
           key={item.id}

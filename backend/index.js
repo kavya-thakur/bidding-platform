@@ -25,7 +25,7 @@ const io = new Server(server, {
 let items = [
   {
     id: 1,
-    title: "Apple iPhone 15 Pro (256GB)",
+    title: "Apple iPhone 15 Pro",
     startingPrice: 999,
     currentBid: 999,
     endTime: Date.now() + 12 * 60 * 1000,
@@ -33,7 +33,7 @@ let items = [
   },
   {
     id: 2,
-    title: "MacBook Air M2 (16GB RAM)",
+    title: "MacBook Air M2 ",
     startingPrice: 1399,
     currentBid: 1399,
     endTime: Date.now() + 15 * 60 * 1000,
@@ -41,7 +41,7 @@ let items = [
   },
   {
     id: 3,
-    title: "Sony WH-1000XM5 Noise Cancelling Headphones",
+    title: "Sony Noise Cancelling Headphones",
     startingPrice: 299,
     currentBid: 299,
     endTime: Date.now() + 9 * 60 * 1000,
@@ -49,7 +49,7 @@ let items = [
   },
   {
     id: 4,
-    title: 'Samsung 55" QLED 4K Smart TV',
+    title: "Samsung Tv",
     startingPrice: 799,
     currentBid: 799,
     endTime: Date.now() + 18 * 60 * 1000,
@@ -57,7 +57,7 @@ let items = [
   },
   {
     id: 5,
-    title: "Apple Watch Ultra 2",
+    title: "Apple Watch Ultra",
     startingPrice: 799,
     currentBid: 799,
     endTime: Date.now() + 10 * 60 * 1000,
@@ -65,7 +65,7 @@ let items = [
   },
   {
     id: 6,
-    title: "PlayStation 5 + DualSense Controller",
+    title: "PlayStation 5 r",
     startingPrice: 549,
     currentBid: 549,
     endTime: Date.now() + 14 * 60 * 1000,
@@ -73,7 +73,7 @@ let items = [
   },
   {
     id: 7,
-    title: "Canon EOS R10 Mirrorless Camera Kit",
+    title: "Canon Mirrorless Camera ",
     startingPrice: 999,
     currentBid: 999,
     endTime: Date.now() + 16 * 60 * 1000,
@@ -89,7 +89,7 @@ let items = [
   },
   {
     id: 9,
-    title: "Nike Air Jordan 1 Retro (Limited Edition)",
+    title: "Nike Air Jordan ",
     startingPrice: 350,
     currentBid: 350,
     endTime: Date.now() + 11 * 60 * 1000,
@@ -97,7 +97,7 @@ let items = [
   },
   {
     id: 10,
-    title: "Rolex Oyster Perpetual (Pre-owned)",
+    title: "Rolex Oyster Perpetual",
     startingPrice: 8500,
     currentBid: 8500,
     endTime: Date.now() + 20 * 60 * 1000,

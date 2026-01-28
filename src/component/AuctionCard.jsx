@@ -1,4 +1,3 @@
-
 import { useEffect, useState, memo } from "react";
 import { motion, AnimatePresence } from "framer-motion";
 import { Trophy, XCircle, Gavel } from "lucide-react";
@@ -29,7 +28,9 @@ const AuctionCard = memo(function AuctionCard({ item, onBid, userId, now }) {
           <h3 className="text-lg text-neutral-700 font-semibold">
             {item.title}
           </h3>
-          <Gavel className="text-indigo-500" />
+          <div className="bg-indigo-100 px-4 py-3 rounded-full">
+            <Gavel className="text-indigo-600 w-4" />
+          </div>
         </div>
 
         {/* Price */}
@@ -37,7 +38,7 @@ const AuctionCard = memo(function AuctionCard({ item, onBid, userId, now }) {
           key={item.currentBid}
           initial={{ opacity: 0, y: 6 }}
           animate={{ opacity: 1, y: 0 }}
-          className="text-3xl font-bold text-indigo-600"
+          className="text-2xl md:text-3xl font-bold text-indigo-600"
         >
           ${item.currentBid}
         </motion.p>
@@ -102,7 +103,7 @@ const AuctionCard = memo(function AuctionCard({ item, onBid, userId, now }) {
             onBid(item.id, item.currentBid);
             setTimeout(() => setIsBidding(false), 300);
           }}
-          className={`mt-5 w-full py-3 rounded-xl font-medium transition-all
+          className={`mt-5 w-full py-3 rounded-xl  font-medium transition-all
             ${
               isEnded
                 ? "bg-slate-200 text-slate-400 cursor-not-allowed"

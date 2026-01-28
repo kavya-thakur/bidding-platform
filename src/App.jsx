@@ -81,7 +81,7 @@ function App() {
   };
 
   return (
-    <div className="relative min-h-screen overflow-hidden bg-[#fafafa] text-slate-800">
+    <div className="relative min-h-screen overflow-hidden bg-[#fafafa] text-slate-800 px-3">
       {/* Ambient background pattern */}
       <AmbientBackground />
       {/* Floating Header */}
@@ -121,7 +121,7 @@ function App() {
         initial={{ opacity: 0, y: 14 }}
         animate={{ opacity: 1, y: 0 }}
         transition={{ delay: 0.15 }}
-        className="z-90 relative max-w-6xl mx-auto px-6 pt-16 pb-10"
+        className="z-90 relative max-w-6xl mx-auto px-3 pt-16 pb-10"
       >
         <h2 className="text-4xl font-semibold tracking-tight text-slate-900">
           Place your bid in real time
@@ -130,16 +130,6 @@ function App() {
           Compete with other users in the final seconds of live auctions.
           Updates are synchronized instantly across all clients.
         </p>
-        {/* <button
-          onClick={async () => {
-            await fetch(`${import.meta.env.VITE_API_URL}/reset`, {
-              method: "POST",
-            });
-          }}
-          className="text-sm mt-3 px-4 py-2 rounded-lg bg-slate-200 hover:bg-slate-300"
-        >
-          Reset Auctions (Demo)
-        </button> */}
         <button
           onClick={async () => {
             await fetch(`${import.meta.env.VITE_API_URL}/reset`, {
@@ -156,7 +146,7 @@ function App() {
       </motion.section>
 
       {/* Main Content */}
-      <main className="max-w-6xl mx-auto px-6 pb-16">
+      <main className="max-w-6xl mx-auto px-3 pb-16">
         {loading ? (
           <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
             <SkeletonCard />
