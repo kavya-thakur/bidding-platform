@@ -28,7 +28,7 @@ let items = [
     title: "Apple iPhone 15 Pro",
     startingPrice: 999,
     currentBid: 999,
-    endTime: Date.now() + 12 * 60 * 1000,
+    endTime: Date.now() + 1 * 60 * 1000,
     lastBidder: null,
   },
   {
@@ -36,7 +36,7 @@ let items = [
     title: "MacBook Air M2 ",
     startingPrice: 1399,
     currentBid: 1399,
-    endTime: Date.now() + 15 * 60 * 1000,
+    endTime: Date.now() + 2 * 60 * 1000,
     lastBidder: null,
   },
   {
@@ -115,7 +115,7 @@ app.post("/reset", (req, res) => {
     ...item,
     currentBid: item.startingPrice,
     lastBidder: null,
-    endTime: Date.now() + 10 * 60 * 1000, // reset to 10 minutes
+    endTime: Date.now() + 2 * 60 * 1000, // reset to 10 minutes
   }));
 
   io.emit("RESET_ITEMS", items);
